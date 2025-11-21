@@ -1,0 +1,39 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: "test-codebuild"
+    IMAGE_TAG: "latest"
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws --version
+      - echo "Getting repository URI..."
+      - REPO_URI=$(aws ecr describe-repositories --repository-names "$IMAGE_REPO_NAME" --query 'repositories[0].repositoryUri' --output text)
+      - echo $REPO_URI
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPO_URI
+
+  build:
+    commands:
+      - echo "Starting Docker build..."
+      - docker build -t $IMAGE_REPO_NAME .
+      - docker tag $IMAGE_REPO_NAME:latest $REPO_URI:latest
+
+  post_build:
+    commands:
+      - echo "Pushing the image..."
+      - docker push $REPO_URI:latest
+      - echo Writing image definitions file...
+      - printf '{"ImageURI":"%s"}' "$REPO_URI:latest" > imagedefinitions.json
+      - echo "Build completed!"
+
+cache:
+  paths:
+    - /root/.docker/**
+    - /root/.npm/**
+
+artifacts:
+  files:
+    - imagedefinitions.json
