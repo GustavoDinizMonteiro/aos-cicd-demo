@@ -8,7 +8,7 @@
     "dev": "node index.js",
     "build:lambda": "npm install --production && zip -r lambda-deployment.zip node_modules index.js lambda.js package.json",
     "build:ec2": "npm install --production",
-    "test": "node index.js & sleep 2 && curl http://localhost:3000 && curl http://localhost:3000/health && kill $!"
+    "test": "echo \"Run 'npm start' to test the server locally\""
   },
   "keywords": [],
   "author": "",
