@@ -1,0 +1,11 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Installing dependencies...
+      - npm run build:lambda
+
+artifacts:
+  files:
+    - lambda-deployment.zip
