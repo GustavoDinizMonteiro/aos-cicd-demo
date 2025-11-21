@@ -1,0 +1,20 @@
+{
+  "name": "aos-cicd-demo",
+  "version": "1.0.0",
+  "description": "Simple Express.js Hello World server with AWS Lambda and EC2 deployment support",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "build:lambda": "npm install --production && zip -r lambda-deployment.zip node_modules index.js lambda.js package.json",
+    "build:ec2": "npm install --production",
+    "test": "node index.js & sleep 2 && curl http://localhost:3000 && curl http://localhost:3000/health && kill $!"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "serverless-http": "^4.0.0"
+  }
+}
