@@ -1,6 +1,7 @@
-FROM public.ecr.aws/docker/library/node:22-alpine
-WORKDIR /app
+FROM public.ecr.aws/lambda/nodejs:22
+
 COPY package*.json ./
+
 RUN npm install
 COPY . .
-CMD ["node", "index.js"]
+CMD ["index.handler"]

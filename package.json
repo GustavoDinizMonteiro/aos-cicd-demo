@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
-    "build:lambda": "npm install --production && zip -r lambda-deployment.zip node_modules index.js lambda.js package.json",
+    "build:lambda": "npm install --producton",
     "build:ec2": "npm install --production",
     "test": "echo \"Run 'npm start' to test the server locally\""
   },
